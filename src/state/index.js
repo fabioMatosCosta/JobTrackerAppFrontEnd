@@ -20,7 +20,7 @@ export const authSlice = createSlice({
             state.token = action.payload.token;
         },
         setLogout: (state) => {
-            state.user = null;
+            state.frontendUser = null;
             state.token = null;
         },
         setJobPosts: (state, action) => {
