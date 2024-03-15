@@ -3,6 +3,7 @@ export const colorTokens = {
     delftBlue: "#3D405B",
     burntSienna: "#E07A5F",
     cambridgeBlue: "#81B29A",
+    spaceCadet: "#292B3D"
 };
 
 // mui theme settings
@@ -19,8 +20,14 @@ export const themeSettings = (mode) => {
                 secondary: {
                     main: colorTokens.burntSienna
                 },
+                info: {
+                    main: colorTokens.delftBlue
+                },
+                neutral: {
+                    main: colorTokens.eggshell
+                },
                 background: {
-                    default: colorTokens.delftBlue,
+                    default: colorTokens.spaceCadet
                 },
                 }
             : {
@@ -30,6 +37,12 @@ export const themeSettings = (mode) => {
                 },
                 secondary: {
                     main: colorTokens.burntSienna
+                },
+                info: {
+                    main: colorTokens.delftBlue
+                },
+                neutral: {
+                    main: colorTokens.delftBlue
                 },
                 background: {
                     default: colorTokens.eggshell,
