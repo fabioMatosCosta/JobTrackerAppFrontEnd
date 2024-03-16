@@ -60,6 +60,7 @@ const Form = () => {
     };
 
     const [pageType, setPageType] = useState("login");
+    const [regError, setRegError] = useState(false);
     const { palette } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -78,9 +79,14 @@ const Form = () => {
         )
         const savedUser = await savedUserResponse.json();
 
-        if(savedUser) {
+        if(!savedUser.message){
             setPageType("login");
+            setRegError(false);
+            onSubmitProps.resetForm(/*{values: {email: onSubmitProps.email , password: ""}}*/);
+        }else{
+            setRegError(savedUser.message);
         }
+        
     };
 
     const login = async (values, onSubmitProps) => {
@@ -93,16 +99,19 @@ const Form = () => {
             }
         );
         const loggedIn = await loggedInResponse.json();
-        onSubmitProps.resetForm();
 
-        if(loggedIn){
+        if(!loggedIn.message){
             dispatch(
                 setLogin({
                     user: loggedIn.frontendUser,
                     token: loggedIn.token,
                 })
             );
+            setRegError(false);
             navigate("/home");
+            onSubmitProps.resetForm();
+        }else{
+            setRegError(loggedIn.message);
         }
     };
 
@@ -195,6 +204,13 @@ const Form = () => {
                         </FormControl>
                     </Box>
 
+                    {/* Message of error box */}
+                    <Box>
+                        <Typography variant="p" color="error">
+                            {!regError ? "" : regError}
+                        </Typography>
+                    </Box>
+
                     {/* Buttons */}
                     <Box>
                         <Button
@@ -213,6 +229,7 @@ const Form = () => {
                         <Typography
                             onClick={() => {
                                 setPageType(isLogin ? "register" : "login");
+                                setRegError(false);
                                 resetForm();
                             }}
                             sx={{

@@ -21,7 +21,7 @@ const HomePage = () => {
                 justifyContent="space-between"
             >
                 <Box>
-                    {/*<CalendarComponent /> */}
+                    {/* <CalendarComponent /> */}
                 </Box>
                 <Box>
                     <AddJobPost />
