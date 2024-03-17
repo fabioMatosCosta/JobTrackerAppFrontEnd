@@ -10,7 +10,8 @@ const LoginPage = () => {
 
     return (
         <Box>
-            <Box width="100%" 
+            <Box
+            width="100%" 
             backgroundColor={theme.palette.background} 
             p="1rem 6%" 
             textAlign="center"
@@ -25,10 +26,11 @@ const LoginPage = () => {
             </Box>
 
             <Box
-                width="50%"  
+                width="75%"  
                 p="2rem"
                 m="2rem auto"
                 borderRadius="1.5rem"
+                maxWidth = "610px"
                 backgroundColor={theme.palette.background}
             >
                 <Typography 

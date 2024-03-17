@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar/navbar";
 import AddJobPost from "scenes/widgets/AddJobPost";
 import CalendarComponent from "components/Calendar";
+import JobPostList from "scenes/widgets/JobPostList";
 
 
 const HomePage = () => {
@@ -26,6 +27,15 @@ const HomePage = () => {
                 <Box>
                     <AddJobPost />
                 </Box>
+            </Box>
+            <Box
+                width="100%"
+                padding="2rem 6%"
+                display="flex"
+                gap="0.5rem"
+                justifyContent="space-between"
+            >
+                <JobPostList/>
             </Box>
         </Box>
     )
