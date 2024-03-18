@@ -152,8 +152,8 @@ const AddJobPost = () => {
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.companyWebsite}
-                            error={Boolean(touched.jobLink) && Boolean(errors.jobLink)}
-                            helperText={touched.jobLink && errors.jobLink}
+                            error={Boolean(touched.companyWebsite) && Boolean(errors.companyWebsite)}
+                            helperText={touched.companyWebsite && errors.companyWebsite}
                             name="companyWebsite"
                             sx={{ gridColumn: "span 4"}}
                         />
