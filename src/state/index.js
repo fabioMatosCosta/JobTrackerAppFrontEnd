@@ -23,7 +23,7 @@ export const authSlice = createSlice({
             state.frontendUser = null;
             state.token = null;
         },
-        setJobPostList: (state, action) => {
+        setJobPosts: (state, action) => {
             state.jobPosts = action.payload.jobPosts;
         },
         setJobPost: (state, action) => {

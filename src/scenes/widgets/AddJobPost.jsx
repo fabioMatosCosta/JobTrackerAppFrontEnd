@@ -10,7 +10,8 @@ import {
     InputLabel,
     OutlinedInput,
     FormControl,
-    FormHelperText 
+    FormHelperText,
+    Snackbar 
 } from "@mui/material";
 import { useState } from "react";
 import { Formik } from "formik";
@@ -21,10 +22,10 @@ import { setJobPost } from "state";
 
 const jobPostSchema = yup.object().shape({
     title: yup.string().required("required"),
-    type: yup.string().required("required"),
+    type: yup.string(),
     jobLink: yup.string().required("required"),
     company: yup.string().required("required"),
-    companyWebsite: yup.string().url().required("required"),
+    companyWebsite: yup.string(),
     dateToApply: yup.date()
 });
 
@@ -34,7 +35,7 @@ const initialValuesJobPost = {
     jobLink: "",
     company: "",
     companyWebsite: "",
-    dateToApply: new Date(),
+    dateToApply: "",
 };
 
 const AddJobPost = () => {
@@ -44,10 +45,18 @@ const AddJobPost = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { palette } = useTheme();
-    
-    const addJobPost = async (values, onSubmitProps) => {
 
-        console.log(`http://localhost:3001/posts/${user._id}`)
+    {/* Snackbar setup */}
+
+    const [open, setOpen] = useState(false);
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
+    const addJobPost = async (values, onSubmitProps) => {
 
         const savedJobPost = await fetch(
             `http://localhost:3001/posts/${user._id}`,
@@ -58,12 +67,14 @@ const AddJobPost = () => {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(values),
+                
             }
         )
         const savedPost = await savedJobPost.json();
 
         if(!savedPost.message){
             dispatch(setJobPost({post: savedPost }));
+            setOpen(true);
             onSubmitProps.resetForm();
         }else{
             console.log(savedPost.message)
@@ -72,7 +83,7 @@ const AddJobPost = () => {
     };
 
     return(
-        <WidgetWrapper>
+    <WidgetWrapper>
         <Formik
             onSubmit={ addJobPost }
             initialValues={ initialValuesJobPost }
@@ -94,53 +105,68 @@ const AddJobPost = () => {
                         gap="30px"
                         gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                     >
-                                <TextField
-                                    label="Title"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    value={values.firstName}
-                                    name="title"
-                                    error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                                    helperText={touched.firstName && errors.firstName}
-                                    sx={{ gridColumn: "span 2"}}
-                                />
-                                <TextField
-                                    label="Last Name"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    value={values.lastName}
-                                    name="lastName"
-                                    error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                                    helperText={touched.lastName && errors.lastName}
-                                    sx={{ gridColumn: "span 2"}}
-                                />
+    
                         <TextField
-                            label="Email"
+                            label="Title"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.email}
-                            name="email"
-                            error={Boolean(touched.email) && Boolean(errors.email)}
-                            helperText={touched.email && errors.email}
+                            value={values.title}
+                            name="title"
+                            error={Boolean(touched.title) && Boolean(errors.title)}
+                            helperText={touched.title && errors.title}
                             sx={{ gridColumn: "span 4"}}
                         />
                         <TextField
-                            label="Email"
+                            label="Link to job posting"
                             onBlur={handleBlur}
                             onChange={handleChange}
-                            value={values.email}
-                            name="email"
-                            error={Boolean(touched.email) && Boolean(errors.email)}
-                            helperText={touched.email && errors.email}
+                            value={values.jobLink}
+                            name="jobLink"
+                            error={Boolean(touched.jobLink) && Boolean(errors.jobLink)}
+                            helperText={touched.jobLink && errors.jobLink}
                             sx={{ gridColumn: "span 4"}}
                         />
-                    </Box>
-
-                    {/* Message of error box */}
-                    <Box>
-                        <Typography variant="p" color="error">
-                            error
-                        </Typography>
+                        {/* Type of job , not a text field, see later*/}     
+                        <TextField
+                            label="Type"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.type}
+                            name="type"
+                            error={Boolean(touched.type) && Boolean(errors.type)}
+                            helperText={touched.type && errors.type}
+                            sx={{ gridColumn: "span 2"}}
+                        />
+                        <TextField
+                            label="Company"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.company}
+                            name="company"
+                            error={Boolean(touched.company) && Boolean(errors.company)}
+                            helperText={touched.company && errors.company}
+                            sx={{ gridColumn: "span 2"}}
+                        />
+                        <TextField
+                            label="Company Website"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.companyWebsite}
+                            error={Boolean(touched.jobLink) && Boolean(errors.jobLink)}
+                            helperText={touched.jobLink && errors.jobLink}
+                            name="companyWebsite"
+                            sx={{ gridColumn: "span 4"}}
+                        />
+                        <TextField
+                            label="Date to Apply"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.dateToApply}
+                            name="dateToApply"
+                            error={Boolean(touched.dateToApply) && Boolean(errors.dateToApply)}
+                            helperText={touched.dateToApply && errors.dateToApply}
+                            sx={{ gridColumn: "span 4"}}
+                        />
                     </Box>
 
                     {/* Buttons */}
@@ -162,7 +188,15 @@ const AddJobPost = () => {
                 </form>
             )}
         </Formik>
-        </WidgetWrapper>
+        <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={handleClose}
+                message="Job Post Added"
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        />
+    </WidgetWrapper>
+        
     )
 };
 
