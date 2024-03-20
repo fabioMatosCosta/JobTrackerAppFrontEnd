@@ -24,7 +24,7 @@ const HomePage = () => {
                 <Box>
                     {/* <CalendarComponent /> */}
                 </Box>
-                <Box>
+                <Box width={"55%"}>
                     <AddJobPost />
                 </Box>
             </Box>

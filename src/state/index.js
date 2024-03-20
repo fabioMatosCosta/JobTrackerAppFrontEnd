@@ -18,10 +18,13 @@ export const authSlice = createSlice({
         setLogin: (state, action) => {
             state.user = action.payload.user;
             state.token = action.payload.token;
+            state.jobPosts = action.payload.user.jobPosts;
         },
         setLogout: (state) => {
             state.user = null;
             state.token = null;
+            state.jobPosts = [];
+            state.jobPostContacts = [];
         },
         setJobPosts: (state, action) => {
             state.jobPosts = action.payload.jobPosts;

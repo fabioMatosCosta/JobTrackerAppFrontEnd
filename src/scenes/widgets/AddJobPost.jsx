@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector} from "react-redux";
-import { setJobPost } from "state";
+import { setJobPosts } from "state";
 
 const jobPostSchema = yup.object().shape({
     title: yup.string().required("required"),
@@ -78,23 +78,25 @@ const AddJobPost = () => {
                 
             }
         )
-        const savedPost = await savedJobPost.json();
+        const newPostList = await savedJobPost.json();
 
-        if(!savedPost.message){
-            dispatch(setJobPost({post: savedPost }));
+        if(!newPostList.message){
+            dispatch(setJobPosts({jobPosts: newPostList }));
             setOpen(true);
             onSubmitProps.resetForm();
         }else{
-            console.log(savedPost.message)
+            console.log(newPostList.message)
         }
         
     };
 
     return(
-    <WidgetWrapper>
+    <WidgetWrapper >
     <Paper
         elevation={2}
-        sx={{ "padding" : "1.5rem", "backgroundColor": palette.background.default}}
+        sx={{ "padding" : "1.5rem", 
+        "backgroundColor": palette.background.default, 
+        }}
     > 
     <Formik
             onSubmit={ addJobPost }

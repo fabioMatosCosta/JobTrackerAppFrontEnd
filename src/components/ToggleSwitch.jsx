@@ -4,7 +4,7 @@ import { styled } from "@mui/system";
 const ToggleSwitch =  styled(Switch)(({ theme }) => ({
     padding: 8,
     '& .MuiSwitch-track': {
-        borderRadius: 22 / 2,
+        borderRadius: 26 / 2,
         '&::before, &::after': {
             content: '""',
             position: 'absolute',
