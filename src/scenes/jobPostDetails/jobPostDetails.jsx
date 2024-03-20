@@ -5,14 +5,12 @@ import{
     Typography
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useDispatch} from "react-redux";
 import { useParams } from 'react-router';
 import { useState, useEffect } from "react";
 
 
 const JobPostDetails = () => {
     const token = useSelector((state) => state.token);
-    const dispatch = useDispatch();
     const params = useParams();
     const jobPostId = params.jobPostId;
 
@@ -29,7 +27,6 @@ const JobPostDetails = () => {
 
     useEffect( () => {
         getPostDetails();
-        console.log(jobPost)
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     if(!jobPost) return null;
@@ -75,4 +72,4 @@ const JobPostDetails = () => {
         
 )};
 
-export default JobPostDetails
+export default JobPostDetails;
