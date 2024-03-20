@@ -1,6 +1,4 @@
-import { useState } from "react";
 import {
-    Box,
     IconButton,
     InputBase,
     Typography,
@@ -11,20 +9,13 @@ import {
     Avatar,
 } from "@mui/material";
 import {
-    Search,
-    Message,
     DarkMode,
     LightMode,
-    Notifications,
-    Help,
-    Menu,
-    Close
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
-import { red } from "@mui/material/colors";
 
 const Navbar = () => {;
     const dispatch = useDispatch();
@@ -34,14 +25,11 @@ const Navbar = () => {;
     const theme = useTheme();
     const neutralLight = theme.palette.neutral.light;
     const dark = theme.palette.neutral.dark;
-    const background = theme.palette.background;
     const primaryLight = theme.palette.primary.light;
     const alt = theme.palette.background.alt;
     const secondary = theme.palette.secondary.main;
-    const primary = theme.palette.primary.main;
 
     const fullName = `${user.firstName} ${user.lastName}`;
-
 
     return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -55,7 +43,8 @@ const Navbar = () => {;
                     "&:hover": {
                         color: primaryLight,
                         cursor: "pointer",
-                    }
+                    },
+                    padding: "0 0.5rem",
                 }}
             >
                 Jobbing Memory

@@ -1,23 +1,16 @@
-import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
 import {
     Box,
-    Typography,
     TextField,
     Button,
     useTheme,
-    IconButton,
-    InputLabel,
-    OutlinedInput,
-    FormControl,
-    FormHelperText,
-    Snackbar 
+    Snackbar,
+    Paper
 } from "@mui/material";
 import { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { UseDispatch, useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { setJobPost } from "state";
 
 const jobPostSchema = yup.object().shape({
@@ -43,7 +36,6 @@ const AddJobPost = () => {
     const user = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { palette } = useTheme();
 
     {/* Snackbar setup */}
@@ -84,7 +76,11 @@ const AddJobPost = () => {
 
     return(
     <WidgetWrapper>
-        <Formik
+    <Paper
+        elevation={2}
+        sx={{ "padding" : "1.5rem", "backgroundColor": palette.background.default}}
+    > 
+    <Formik
             onSubmit={ addJobPost }
             initialValues={ initialValuesJobPost }
             validationSchema={ jobPostSchema }
@@ -182,12 +178,14 @@ const AddJobPost = () => {
                                 "&:hover": { color: palette.primary.main },
                             }}
                         >
-                        add
+                            Add to the list
                         </Button>
                     </Box>
                 </form>
             )}
         </Formik>
+    </Paper>
+        
         <Snackbar
                 open={open}
                 autoHideDuration={3000}
