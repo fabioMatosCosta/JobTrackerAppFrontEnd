@@ -1,5 +1,6 @@
 import JobPostWrapper from "components/JobPostWrapper";
 import FlexBetween from "components/FlexBetween";
+import ToggleSwitch from "components/ToggleSwitch";
 import { Typography } from "@mui/material";
 
 const JobPost = ({
@@ -36,9 +37,9 @@ const JobPost = ({
                     </FlexBetween>
 
                     <FlexBetween gap="3rem">
-                        <Typography>
+                        <ToggleSwitch>
                             Is Researched toggle
-                        </Typography>
+                        </ToggleSwitch>
                     </FlexBetween>
                     <FlexBetween gap="3rem">
                         <Typography>
