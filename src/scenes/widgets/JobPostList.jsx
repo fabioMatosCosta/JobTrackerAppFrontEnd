@@ -7,7 +7,6 @@ import JobPost from "./JobPost";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { setJobPosts } from "state";
-import FlexBetween from "components/FlexBetween";
 
 const JobPostList = () => {
     const dispatch = useDispatch();
@@ -30,7 +29,6 @@ const JobPostList = () => {
     const theme = useTheme();
     const primaryLight = theme.palette.primary.light;
     const secondary = theme.palette.secondary.main;
-    const info = theme.palette.info.main;
 
     return(
         <WidgetWrapper>
@@ -48,33 +46,14 @@ const JobPostList = () => {
                 Job Posts
             </Typography>
 
-            <FlexBetween>
-                
-                    <Typography variant="h5" fontWeight={"bold"} >
+            <Box display="Flex" alignItems={"left"} gap="1.5rem" pl="3rem">
+                    <Typography variant="h5" fontWeight={"bold"}  >
                         Title
                     </Typography>
-                    <Typography variant="h5" fontWeight={"bold"}>
+                    <Typography variant="h5" fontWeight={"bold"} pl="3rem" >
                         Company
                     </Typography>
-                    <Typography variant="h5" fontWeight={"bold"}>
-                        Researched done
-                    </Typography>
-                    <Typography variant="h5" fontWeight={"bold"}>
-                        Cover Letter done
-                    </Typography>
-                    <Typography variant="h5" fontWeight={"bold"}>
-                        Applied
-                    </Typography>
-                    <Typography variant="h5" fontWeight={"bold"}>
-                        Reply
-                    </Typography>
-                    <Typography variant="h5" fontWeight={"bold"}>
-                        
-                    </Typography>
-                    <Typography variant="h5" fontWeight={"bold"}>
-                        
-                    </Typography>
-            </FlexBetween>
+            </Box>
                     
                 {jobPosts.map(
                     ({
