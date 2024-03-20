@@ -25,7 +25,7 @@ function App() {
               element={isAuth ?  <HomePage/> : <Navigate to="/"/>} 
             />
             <Route 
-              path="/jobPostDetails/:postId" 
+              path="/jobPostDetails/:jobPostId" 
               element={isAuth ? <JobPostDetails /> : <Navigate to="/"/>} 
             />
           </Routes>

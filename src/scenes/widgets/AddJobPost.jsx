@@ -139,17 +139,7 @@ const AddJobPost = () => {
                             helperText={touched.jobLink && errors.jobLink}
                             sx={{ gridColumn: "span 4"}}
                         />
-                        {/* Type of job , not a text field, see later*/}     
-                        <TextField
-                            label="Type"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            value={values.type}
-                            name="type"
-                            error={Boolean(touched.type) && Boolean(errors.type)}
-                            helperText={touched.type && errors.type}
-                            sx={{ gridColumn: "span 2"}}
-                        />
+                        
                         <TextField
                             label="Company"
                             onBlur={handleBlur}
@@ -158,8 +148,9 @@ const AddJobPost = () => {
                             name="company"
                             error={Boolean(touched.company) && Boolean(errors.company)}
                             helperText={touched.company && errors.company}
-                            sx={{ gridColumn: "span 2"}}
+                            sx={{ gridColumn: "span 4"}}
                         />
+                        
                         <TextField
                             label="Company Website"
                             onBlur={handleBlur}
@@ -178,7 +169,18 @@ const AddJobPost = () => {
                             name="dateToApply"
                             error={Boolean(touched.dateToApply) && Boolean(errors.dateToApply)}
                             helperText={touched.dateToApply && errors.dateToApply}
-                            sx={{ gridColumn: "span 4"}}
+                            sx={{ gridColumn: "span 2"}}
+                        />
+                        {/* Type of job , not a text field, see later*/}     
+                        <TextField
+                            label="Type"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.type}
+                            name="type"
+                            error={Boolean(touched.type) && Boolean(errors.type)}
+                            helperText={touched.type && errors.type}
+                            sx={{ gridColumn: "span 2"}}
                         />
                     </Box>
 

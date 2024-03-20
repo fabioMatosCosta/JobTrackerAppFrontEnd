@@ -5,25 +5,12 @@ import {
 } from "@mui/material";
 import JobPost from "./JobPost";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useDispatch, useSelector } from "react-redux";
-import { setJobPosts } from "state";
+import SearchAndFilters from "./SearchAndFilters"; 
+import { useSelector } from "react-redux";
+
 
 const JobPostList = () => {
-    const dispatch = useDispatch();
-    const token = useSelector((state) => state.token);
     const jobPosts = useSelector((state) => state.jobPosts);
-    const user = useSelector((state) => state.user);
-    const userId = user._id;
-
-    const getJobPosts = async () => {
-        const response = await fetch(`http://localhost:3001/posts/${userId}`, {
-            method: "GET",
-            headers: { Authorization: `Bearer ${token}`},
-        });
-        const data = await response.json();
-        console.log(data)
-        dispatch(setJobPosts({ jobPosts: data }));
-    }
 
     /* Colors */
     const theme = useTheme();
@@ -40,17 +27,21 @@ const JobPostList = () => {
                         "&:hover": {
                             color: primaryLight,
                         },
-                        padding: "3rem",
+                        padding: "2rem",
                     }}
             >
                 Job Posts
             </Typography>
 
+            <Box display="flex" alignItems={"left"} gap="1.5rem" p="3rem">
+                <SearchAndFilters/>
+            </Box>
+
             <Box display="Flex" alignItems={"left"} gap="1.5rem" pl="3rem">
-                    <Typography variant="h5" fontWeight={"bold"}  >
-                        Title
+                    <Typography variant="h5" fontWeight={"bold"} pr="4rem" >
+                        Job Title
                     </Typography>
-                    <Typography variant="h5" fontWeight={"bold"} pl="3rem" >
+                    <Typography variant="h5" fontWeight={"bold"} pl="4rem" >
                         Company
                     </Typography>
             </Box>

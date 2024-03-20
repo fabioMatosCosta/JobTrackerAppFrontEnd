@@ -9,7 +9,6 @@ import JobPostList from "scenes/widgets/JobPostList";
 
 
 const HomePage = () => {
-    const {_id, picturePath } = useSelector((state)=> state.user);
 
     return (
         <Box>

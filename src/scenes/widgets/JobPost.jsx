@@ -9,6 +9,7 @@ import { Typography,
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from "react-redux";
 import { setJobPost } from "state";
+import { useNavigate } from "react-router-dom";
 
 const JobPost = ({
     jobPostId,
@@ -21,6 +22,7 @@ const JobPost = ({
     isReply
 }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const token = useSelector((state) => state.token);
 
     /* Toggles */
@@ -34,8 +36,8 @@ const JobPost = ({
         dispatch(setJobPost({ jobPost: data }));
     }
 
-    const handleEdit = (event) => {
-        
+    const handleEdit = () => {
+        navigate(`/jobPostDetails/${jobPostId}`);
     }
 
     return(
@@ -43,12 +45,14 @@ const JobPost = ({
             <FlexBetween>
                 <Box 
                     display="grid"
-                    gridTemplateColumns="repeat(8, minmax(0, 1fr))"
+                    gridTemplateColumns="repeat(7, minmax(0, 2fr))"
                     width={"100%"}
                 >
-                    <FlexBetween gap="3rem">
+                    <FlexBetween gap="3rem" >
                         <Typography 
                             fontWeight="bold"
+                            sx={{width: "fit-content"}}
+                            pr="4rem"
                         >
                             {title}
                         </Typography>
