@@ -19,7 +19,7 @@ import { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { UseDispatch, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 
 

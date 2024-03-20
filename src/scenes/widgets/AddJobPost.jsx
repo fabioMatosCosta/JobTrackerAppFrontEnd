@@ -1,12 +1,15 @@
 import WidgetWrapper from "components/WidgetWrapper";
+import * as React from 'react';
 import {
     Box,
     TextField,
     Button,
     useTheme,
     Snackbar,
-    Paper
+    Paper,
+    IconButton
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -38,7 +41,7 @@ const AddJobPost = () => {
     const dispatch = useDispatch();
     const { palette } = useTheme();
 
-    {/* Snackbar setup */}
+    /* Snackbar setup */
 
     const [open, setOpen] = useState(false);
     const handleClose = (event, reason) => {
@@ -47,6 +50,19 @@ const AddJobPost = () => {
         }
         setOpen(false);
     };
+
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
 
     const addJobPost = async (values, onSubmitProps) => {
 
@@ -101,7 +117,6 @@ const AddJobPost = () => {
                         gap="30px"
                         gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                     >
-    
                         <TextField
                             label="Title"
                             onBlur={handleBlur}
@@ -192,6 +207,7 @@ const AddJobPost = () => {
                 onClose={handleClose}
                 message="Job Post Added"
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                action={action}
         />
     </WidgetWrapper>
         
