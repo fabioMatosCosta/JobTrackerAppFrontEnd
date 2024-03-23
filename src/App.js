@@ -7,6 +7,8 @@ import { themeSettings } from "./theme";
 import HomePage from "scenes/homePage/homePage";
 import LoginPage from "scenes/loginPage/loginPage";
 import JobPostDetails from "scenes/jobPostDetails/jobPostDetails";
+import ContactList from "scenes/widgets/ContactList";
+import ContactDetails from  "scenes/contactDetails/ContactDetails";
 
 function App() {
   const mode = useSelector((state)=> state.mode);
@@ -27,6 +29,10 @@ function App() {
             <Route 
               path="/jobPostDetails/:jobPostId" 
               element={isAuth ? <JobPostDetails /> : <Navigate to="/"/>} 
+            />
+            <Route 
+              path="/jobPostDetails/:jobPostId/contacts/:contactId" 
+              element={isAuth ? <ContactDetails /> : <Navigate to="/"/>} 
             />
           </Routes>
         </ThemeProvider>
