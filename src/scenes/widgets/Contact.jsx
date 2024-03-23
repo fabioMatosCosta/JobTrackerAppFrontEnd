@@ -24,6 +24,8 @@ const Contact = ({
     const token = useSelector((state) => state.token);
     const jobPostId = useParams().jobPostId;
 
+    console.log(firstName + " " + lastName)
+
     /* Toggles */
     /* const handleChangeToggle = async (event) => {
         const name = event.target.name;
