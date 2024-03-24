@@ -18,6 +18,8 @@ import * as yup from "yup";
 import ContactList from "scenes/widgets/ContactList";
 import WidgetWrapper from "components/WidgetWrapper";
 import ToggleSwitch from "components/ToggleSwitch";
+import AddContact from "scenes/widgets/AddContact";
+import { setJobPostContacts } from "state";
 
 const replySchema = yup.object().shape({
     newReply: yup.string().required("required"),
@@ -39,7 +41,6 @@ const JobPostDetails = () => {
 
     /* Reply */
     const addReply = async (values, onSubmitProps) => {
-
         const savedReply = await fetch(
             `http://localhost:3001/posts/${jobPostId}/reply`,
             {
@@ -52,7 +53,7 @@ const JobPostDetails = () => {
                 
             }
         )
-        const reply = await savedReply.json();
+        await savedReply.json();
         getPostDetails();
         onSubmitProps.resetForm();
     };
@@ -77,8 +78,18 @@ const JobPostDetails = () => {
         setJobPost(data);
     };
 
+    const getPostContacts = async () => {
+        const response = await fetch(`http://localhost:3001/contacts/post/${jobPostId}`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}`},
+        });
+        const data = await response.json();
+        dispatch(setJobPostContacts({ jobPostContacts: data }));
+    }
+
     useEffect( () => {
         getPostDetails();
+        getPostContacts();
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     if(!jobPost) return null;
@@ -224,9 +235,10 @@ const JobPostDetails = () => {
                 </WidgetWrapper>
             </Box>
 
-            <WidgetWrapper>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-evenly"}>
+                <AddContact jobPostId={`${jobPostId}`} />
                 <ContactList/>
-            </WidgetWrapper>
+            </Box>
         </Box>
         
 )};

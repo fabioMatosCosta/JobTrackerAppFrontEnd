@@ -8,34 +8,31 @@ import { Typography,
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from "react-redux";
-import { setJobPost } from "state";
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router';
+import { setJobPostContact } from "state";
 
 const Contact = ({
     contactId,
-    firstName,
-    lastName,
-    company,
-    isContacted
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const token = useSelector((state) => state.token);
     const jobPostId = useParams().jobPostId;
+    const contacts = useSelector((state) => state.jobPostContacts);
+    const contactInfo = contacts.find((contact) => contact._id === contactId);
 
-    console.log(firstName + " " + lastName)
+
 
     /* Toggles */
-    /* const handleChangeToggle = async (event) => {
-        const name = event.target.name;
-        const response = await fetch(`http://localhost:3001/posts/${jobPostId}/${name}`, {
+    const handleChangeToggle = async () => {
+        const response = await fetch(`http://localhost:3001/contacts/isContacted/${contactId}`, {
             method: "PATCH",
             headers: { Authorization: `Bearer ${token}`},
         });
         const data = await response.json();
-        dispatch(setJobPost({ jobPost: data }));
-    } */
+        dispatch(setJobPostContact({ jobPostContact: data }));
+    } 
 
     const handleEdit = () => {
         navigate(`/jobPostDetails/${jobPostId}/contacts/${contactId}`);
@@ -55,27 +52,27 @@ const Contact = ({
                             sx={{width: "fit-content"}}
                             pr="4rem"
                         >
-                            {`${firstName} ${lastName}`}
+                            { `${contactInfo.firstName} ${contactInfo.lastName}`} 
                         </Typography>
                     </FlexBetween>
                     <FlexBetween gap="3rem">
                         <Typography>
-                            {company}
+                            {contactInfo.email}
                         </Typography>
                     </FlexBetween>
 
                     {/* Toggles */}
 
-                    {/* <FlexBetween>
+                    <FlexBetween>
                         <FormControlLabel
                                 control={
-                                    <ToggleSwitch checked={isContacted} onChange={handleChangeToggle}  name="isContacted" />
+                                    <ToggleSwitch checked={contactInfo.isContacted} onChange={handleChangeToggle}  name="isContacted" />
                                 }
                                 label= "Contacted"
                                 labelPlacement="top"
                         >
                         </FormControlLabel>
-                    </FlexBetween> */}
+                    </FlexBetween>
 
                     {/* Edit Button */}
                     

@@ -5,13 +5,11 @@ import {
 } from "@mui/material";
 import Contact from "./Contact";
 import WidgetWrapper from "components/WidgetWrapper";
-import SearchAndFilters from "./SearchAndFilters"; 
 import { useSelector } from "react-redux";
 
 
 const ContactList = () => {
-    const jobPosts = useSelector((state) => state.jobPosts);
-
+    const contacts = useSelector((state) => state.jobPostContacts);
     /* Colors */
     const theme = useTheme();
     const primaryLight = theme.palette.primary.light;
@@ -37,25 +35,17 @@ const ContactList = () => {
                         Name
                     </Typography>
                     <Typography variant="h5" fontWeight={"bold"} pl="4rem" >
-                        Company
+                        Email
                     </Typography>
             </Box>
                     
-                {jobPosts.map(
+                {contacts.map(
                     ({
-                        _id,
-                        firstName,
-                        lastName,
-                        company,
-                        isContacted
+                        _id
                     }) => (
                         <Contact 
                             key={_id}
                             contactId={_id}
-                            firstName={firstName}
-                            lastName={lastName}
-                            company={company}
-                            isContacted={isContacted}
                         />
                     )
                 )}
