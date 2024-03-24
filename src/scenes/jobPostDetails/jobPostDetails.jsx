@@ -53,9 +53,8 @@ const JobPostDetails = () => {
             }
         )
         const reply = await savedReply.json();
-        /* dispatch(setJobPosts({jobPosts: newPostList })); */
-        console.log(reply)
-       /*  onSubmitProps.resetForm(); */
+        getPostDetails();
+        onSubmitProps.resetForm();
     };
 
     /* Change toggle switch */
@@ -66,8 +65,8 @@ const JobPostDetails = () => {
             method: "PATCH",
             headers: { Authorization: `Bearer ${token}`},
         });
-        const data = await response.json();
-        dispatch(setJobPost({ jobPost: data }));
+        const data = await response.json(); 
+        setJobPost(data);
     }
     const getPostDetails = async () => {
         const response = await fetch(`http://localhost:3001/posts/details/${jobPostId}`, {
@@ -95,7 +94,6 @@ const JobPostDetails = () => {
                 justifyContent="space-between"
             >
                 <FlexBetween ml="1rem">
-                    
                     <WidgetWrapper>
                         <Typography fontWeight="bold" variant="h3" padding="0.75rem 6%">
                             {jobPost.title}
@@ -104,13 +102,7 @@ const JobPostDetails = () => {
                             Company: {jobPost.company}
                         </Typography>
                         <Typography padding="0.75rem 6%">
-                            Link :
-                            <Link 
-                                underline="hover" 
-                                rel="noopener"
-                            >
-                                {jobPost.jobLink}
-                            </Link>
+                            Link : <Link underline="hover" rel="noopener">{jobPost.jobLink}</Link>
                         </Typography>
                         <Typography padding="0.75rem 6%">
                             Company Website: 
@@ -122,6 +114,8 @@ const JobPostDetails = () => {
                             </Link>
                         </Typography>
                     </WidgetWrapper>
+
+                    {/* Toggles */}
 
                     <WidgetWrapper>
                         <FormControlLabel
@@ -151,6 +145,9 @@ const JobPostDetails = () => {
                         </FormControlLabel>
                     </WidgetWrapper>
                 </FlexBetween>
+
+                {/* Reply */}
+
                 <WidgetWrapper width="90%" maxWidth={"500px"}>
                     <Paper
                         elevation={2}
@@ -167,65 +164,66 @@ const JobPostDetails = () => {
                         >
                         </FormControlLabel>
                     
-    <Formik
-            onSubmit={ addReply }
-            initialValues={ initialValueReply }
-            validationSchema={ replySchema }
-        >
-            {({
-                values,
-                errors,
-                touched,
-                handleBlur,
-                handleChange,
-                handleSubmit,
-                setFieldValue,
-                resetForm,
-            }) => (
-                <form onSubmit={handleSubmit}>
-                    <Box>
-                        <Typography>
-                            Reply :  {jobPost.isReply ? jobPost.reply : "No"}
-                        </Typography>
-                    </Box>
-                    <Box
-                        display="grid"
-                        gap="30px"
-                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                    >
-                        <TextField
-                            label="Reply"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            value={values.newReply}
-                            name="newReply"
-                            error={Boolean(touched.newReply) && Boolean(errors.newReply)}
-                            helperText={touched.newReply && errors.newReply}
-                            sx={{ gridColumn: "span 4"}}
-                        />
-                    </Box>
-                    <Box>
-                        <Button
-                            fullWidth
-                            type="submit"
-                            sx={{
-                                m: "2rem 0",
-                                p: "1rem",
-                                backgroundColor: theme.palette.primary.main,
-                                color: theme.palette.primary.dark,
-                                "&:hover": { color: theme.palette.primary.main },
-                            }}
+                    <Formik
+                            onSubmit={ addReply }
+                            initialValues={ initialValueReply }
+                            validationSchema={ replySchema }
                         >
-                            Add reply
-                        </Button>
-                    </Box>
-                </form>
-            )}
-        </Formik>
-                        
+                            {({
+                                values,
+                                errors,
+                                touched,
+                                handleBlur,
+                                handleChange,
+                                handleSubmit,
+                                setFieldValue,
+                                resetForm,
+                            }) => (
+                                <form onSubmit={handleSubmit}>
+                                    
+                                    <Box
+                                        display="grid"
+                                        gap="30px"
+                                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                                    >
+                                        <TextField
+                                            label="Reply"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            value={values.newReply}
+                                            name="newReply"
+                                            error={Boolean(touched.newReply) && Boolean(errors.newReply)}
+                                            helperText={touched.newReply && errors.newReply}
+                                            sx={{ gridColumn: "span 4"}}
+                                        />
+                                    </Box>
+                                    <Box>
+                                        <Button
+                                            fullWidth
+                                            type="submit"
+                                            sx={{
+                                                m: "2rem 0",
+                                                p: "1rem",
+                                                backgroundColor: theme.palette.primary.main,
+                                                color: theme.palette.primary.dark,
+                                                "&:hover": { color: theme.palette.primary.main },
+                                            }}
+                                        >
+                                            Add reply
+                                        </Button>
+                                    </Box>
+                                    <Box>
+                                        <Typography>
+                                            Reply :  {jobPost.isReply ? jobPost.reply : "No"}
+                                        </Typography>
+                                    </Box>
+                                </form>
+                            )}
+                        </Formik>
                     </Paper>
                 </WidgetWrapper>
             </Box>
+
             <WidgetWrapper>
                 <ContactList/>
             </WidgetWrapper>
