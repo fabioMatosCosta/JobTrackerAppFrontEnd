@@ -29,7 +29,7 @@ const JobPostList = () => {
                         },
                         padding: "2rem",
                     }}
-            >
+                >
                 Job Posts
             </Typography>
 

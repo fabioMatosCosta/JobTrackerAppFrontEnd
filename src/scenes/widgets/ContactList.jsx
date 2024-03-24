@@ -12,24 +12,10 @@ const ContactList = () => {
     const contacts = useSelector((state) => state.jobPostContacts);
     /* Colors */
     const theme = useTheme();
-    const primaryLight = theme.palette.primary.light;
-    const secondary = theme.palette.secondary.main;
+    
 
     return(
         <WidgetWrapper>
-            <Typography 
-                    fontWeight="bold" 
-                    variant="h3"
-                    color={secondary}
-                    sx={{
-                        "&:hover": {
-                            color: primaryLight,
-                        },
-                        padding: "2rem",
-                    }}
-            >
-                Contacts
-            </Typography>
             <Box display="Flex" alignItems={"left"} gap="1.5rem" pl="3rem">
                     <Typography variant="h5" fontWeight={"bold"} pr="4rem" >
                         Name

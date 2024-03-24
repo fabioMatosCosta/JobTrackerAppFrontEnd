@@ -36,6 +36,8 @@ const JobPostDetails = () => {
     const jobPostId = params.jobPostId;
     const theme = useTheme();
     const dispatch = useDispatch();
+    const primaryLight = theme.palette.primary.light;
+    const secondary = theme.palette.secondary.main;
 
     const [jobPost, setJobPost] = useState(null);
 
@@ -234,7 +236,19 @@ const JobPostDetails = () => {
                     </Paper>
                 </WidgetWrapper>
             </Box>
-
+            <Typography 
+                    fontWeight="bold" 
+                    variant="h3"
+                    color={secondary}
+                    sx={{
+                        "&:hover": {
+                            color: primaryLight,
+                        },
+                        padding: "2rem",
+                    }}
+            >
+                Contacts
+            </Typography>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-evenly"}>
                 <AddContact jobPostId={`${jobPostId}`} />
                 <ContactList/>

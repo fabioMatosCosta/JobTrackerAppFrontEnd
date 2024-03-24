@@ -16,7 +16,7 @@ const contactSchema = yup.object().shape({
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
-    phoneNumber: yup.number().min(8),
+    phoneNumber: yup.number(),
     profileLinks: yup.string(),
     notes: yup.string()
 });
@@ -51,17 +51,8 @@ const AddContact = (jobPostId) => {
             }
         )
         const newContact = await savedContact.json();
-        console.log(newContact)
         dispatch(setJobPostContacts({jobPostContacts: newContact }));
         onSubmitProps.resetForm();
-
-       /*  if(!newContact.message){
-            dispatch(setJobPostContacts({jobPostContacts: newContact }));
-            onSubmitProps.resetForm();
-        }else{
-            console.log(newContact.message)
-        }
-         */
     };
 
     return(

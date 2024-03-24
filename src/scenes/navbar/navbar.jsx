@@ -7,7 +7,6 @@ import {
     FormControl,
     useTheme,
     Avatar,
-    Button
 } from "@mui/material";
 import {
     DarkMode,

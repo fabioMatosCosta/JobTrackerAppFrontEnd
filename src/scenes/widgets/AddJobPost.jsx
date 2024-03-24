@@ -7,7 +7,8 @@ import {
     useTheme,
     Snackbar,
     Paper,
-    IconButton
+    IconButton,
+    Typography
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
@@ -40,6 +41,11 @@ const AddJobPost = () => {
     const token = useSelector((state) => state.token);
     const dispatch = useDispatch();
     const { palette } = useTheme();
+
+      /* Colors */
+      const theme = useTheme();
+      const primaryLight = theme.palette.primary.light;
+      const secondary = theme.palette.secondary.main;
 
     /* Snackbar setup */
 
@@ -98,6 +104,19 @@ const AddJobPost = () => {
         "backgroundColor": palette.background.default, 
         }}
     > 
+    <Typography
+        fontWeight="bold" 
+        variant="h4"
+        color={secondary}
+        sx={{
+            "&:hover": {
+                color: primaryLight,
+            },
+            padding: "2rem",
+        }}
+    >
+        New Job Post
+    </Typography>
     <Formik
             onSubmit={ addJobPost }
             initialValues={ initialValuesJobPost }
