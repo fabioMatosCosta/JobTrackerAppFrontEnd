@@ -7,17 +7,19 @@ import {
     FormControl,
     useTheme,
     Avatar,
+    Button
 } from "@mui/material";
 import {
     DarkMode,
     LightMode,
 } from "@mui/icons-material";
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
-const Navbar = () => {;
+const Navbar = (page) => {;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state) => state.user);
@@ -30,6 +32,7 @@ const Navbar = () => {;
     const secondary = theme.palette.secondary.main;
 
     const fullName = `${user.firstName} ${user.lastName}`;
+
 
     return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -52,6 +55,9 @@ const Navbar = () => {;
         </FlexBetween>
 
         <FlexBetween gap="2rem">
+            <FlexBetween>
+            {page.page === "contactDetails" || page.page === "jobPostDetails" ? (<IconButton onClick={() => navigate(-1)}><NavigateBeforeIcon></NavigateBeforeIcon></IconButton>) : null}
+            </FlexBetween>
             <FlexBetween gap="1.5rem"> 
                 <Avatar src={user.picturePath}/>
             </FlexBetween>

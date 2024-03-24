@@ -96,7 +96,7 @@ const JobPostDetails = () => {
 
     return (
         <Box>
-            <Navbar/>
+            <Navbar page="jobPostDetails"/>
             <Box
                 width="100%"
                 padding="2rem 6%"
