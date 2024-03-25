@@ -1,6 +1,5 @@
 import { 
     Typography,
-    useTheme,
     Box
 } from "@mui/material";
 import Contact from "./Contact";
@@ -10,8 +9,6 @@ import { useSelector } from "react-redux";
 
 const ContactList = () => {
     const contacts = useSelector((state) => state.jobPostContacts);
-    /* Colors */
-    const theme = useTheme();
     
 
     return(
