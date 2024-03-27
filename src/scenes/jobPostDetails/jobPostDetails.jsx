@@ -111,21 +111,20 @@ const JobPostDetails = () => {
                         <Typography fontWeight="bold" variant="h3" padding="0.75rem 6%">
                             {jobPost.title}
                         </Typography>
-                        <Typography padding="0.75rem 6%">
-                            Company: {jobPost.company}
+                        <Typography padding="0.75rem 6%" variant="h5">
+                            Link : 
                         </Typography>
-                        <Typography padding="0.75rem 6%">
-                            Link : <Link underline="hover" rel="noopener">{jobPost.jobLink}</Link>
+                        <Link underline="hover" rel="noopener" pl="0.75rem">{jobPost.jobLink}</Link>
+                        <Typography padding="0.75rem 6%" variant="h5">
+                            Company:
                         </Typography>
-                        <Typography padding="0.75rem 6%">
+                        <Typography pl="0.75rem">
+                            {jobPost.company}
+                        </Typography>
+                        <Typography padding="0.75rem 6%" variant="h5">
                             Company Website: 
-                            <Link 
-                                underline="hover" 
-                                rel="noopener"
-                            >
-                                {jobPost.companyWebsite}
-                            </Link>
                         </Typography>
+                        <Link underline="hover" rel="noopener" pl="0.75rem">{jobPost.companyWebsite}</Link>
                     </WidgetWrapper>
 
                     {/* Toggles */}
@@ -247,11 +246,12 @@ const JobPostDetails = () => {
                             color: primaryLight,
                         },
                         padding: "2rem",
+                        marginLeft: "2rem",
                     }}
             >
                 Contacts
             </Typography>
-            <Box display={"flex"} alignItems={"center"} justifyContent={"space-evenly"}>
+            <Box display={"flex"} alignItems={"start"} justifyContent={"space-evenly"}>
                 <AddContact jobPostId={`${jobPostId}`} />
                 <ContactList/>
             </Box>

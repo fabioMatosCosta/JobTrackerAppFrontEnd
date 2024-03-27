@@ -61,7 +61,7 @@ const Contact = ({
                         </Typography>
                     </FlexBetween>
 
-                    {/* Toggles */}
+                    {/* Toggle */}
 
                     <FlexBetween>
                         <FormControlLabel

@@ -9,15 +9,17 @@ import {
     List,
     ListItem,
     ListItemText,
-    Divider,
+    FormControlLabel
 } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { setJobPostContact } from "state";
 import WidgetWrapper from "components/WidgetWrapper";
+import FlexBetween from "components/FlexBetween";
+import ToggleSwitch from "components/ToggleSwitch";
 
 const updateContactNotesSchema = yup.object().shape({
     notes: yup.string().required("required"),
@@ -112,6 +114,15 @@ const ContactDetails = () => {
         dispatch(setJobPostContact({ jobPostContact: newContact }));
     }
 
+    const handleChangeToggle = async () => {
+        const response = await fetch(`http://localhost:3001/contacts/isContacted/${contactId}`, {
+            method: "PATCH",
+            headers: { Authorization: `Bearer ${token}`},
+        });
+        const data = await response.json();
+        dispatch(setJobPostContact({ jobPostContact: data }));
+    } 
+
 
     return (
         <Box>
@@ -119,28 +130,47 @@ const ContactDetails = () => {
             <Box
                 
             >
-                <Box>
-                    <Typography>
-                        Contact Details
+            <Box ml="1rem" display={"flex"} >
+                <WidgetWrapper>
+                    <Typography fontWeight="bold" variant="h3" padding="0.75rem 6%">
+                        {contactInfo.firstName} {contactInfo.lastName} 
                     </Typography>
-                    <Typography>
-                        {contactInfo.firstName} 
-                        {contactInfo.lastName} 
-                        {contactInfo.email} 
-                        {contactInfo.phoneNumber} 
+                    <Typography padding="0.75rem 6%" variant="h5">
+                        Email :
                     </Typography>
-                </Box>
-                <Box
-                    width="100%"
-                    padding="2rem 6%"
-                    display="flex"
-                    gap="0.5rem"
-                    justifyContent="space-between"
-                >
-                    <WidgetWrapper>
-                        <Typography 
+                    <Typography pl="0.75rem">
+                        {contactInfo.email}
+                    </Typography>
+                    <Typography padding="0.75rem 6%" variant="h5">
+                        Phone Number :
+                    </Typography>
+                    <Typography pl="0.75rem">
+                        {contactInfo.phoneNumber}
+                    </Typography>
+                </WidgetWrapper>
+                {/* Toggle */}
+                <FlexBetween ml="3rem" pl="3rem">
+                    <FormControlLabel
+                            control={
+                                <ToggleSwitch checked={contactInfo.isContacted} onChange={handleChangeToggle}  name="isContacted" />
+                            }
+                            label= "Contacted :"
+                            labelPlacement="top"
+                    >
+                    </FormControlLabel>
+                </FlexBetween>
+            </Box>
+            <Box
+                width="100%"
+                padding="2rem 6%"
+                display="flex"
+                gap="0.5rem"
+                justifyContent="space-between"
+            >
+                <WidgetWrapper>
+                    <Typography 
                         fontWeight="bold" 
-                        variant="h3"
+                        variant="h4"
                         color={secondary}
                         sx={{
                             "&:hover": {
@@ -148,108 +178,112 @@ const ContactDetails = () => {
                             },
                             padding: "2rem",
                         }}
-                        >
-                            Profile Links : 
-                        </Typography>
-                        <List  aria-label="profileLinks">
-                            {profileLinks.map((link, index)=>(
-                                <>
-                                    <ListItem key={index}>
-                                        <ListItemText primary={link}/>
-                                        <Button>
-                                            <DeleteIcon onClick={() => deleteProfileLink(index)} />
-                                        </Button>
-                                    </ListItem>
-                                    <Divider variant="middle" component="li" />
-                                </>
-                            ))}
-                        </List>
-                    </WidgetWrapper>
-                    <WidgetWrapper >
-                    <Paper
-                        elevation={2}
-                        sx={{ "padding" : "1.5rem", 
-                        "backgroundColor": palette.background.default, 
-                        }}
-                    > 
-                        <Formik
-                            onSubmit={ addProfileLink }
-                            initialValues={ initialValuesContact }
-                            validationSchema={ updateContactProfileLinksSchema }
-                        >
-                            {({
-                                values,
-                                errors,
-                                touched,
-                                handleBlur,
-                                handleChange,
-                                handleSubmit,
-                                setFieldValue,
-                                resetForm,
-                            }) => (
-                                <form onSubmit={handleSubmit}>
-                                    <Box
-                                        display="grid"
-                                        gap="30px"
-                                        gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                                        minWidth={"450px"}
-                                    >
-                                        <TextField
-                                            label="New Profile Link"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            value={values.profileLinks}
-                                            name="profileLinks"
-                                            error={Boolean(touched.profileLinks) && Boolean(errors.profileLinks)}
-                                            helperText={touched.profileLinks && errors.profileLinks}
-                                            sx={{ gridColumn: "span 4"}}
-                                        />    
-                                    </Box>
+                    >
+                        Profile Links : 
+                    </Typography>
+                    <List  aria-label="profileLinks">
+                        {profileLinks.map((link, index)=>(
+                            <ListItem key={index} sx={{borderBottom : "1px solid #ccc"}}>
+                                <ListItemText primary={link} />
+                                <Button >
+                                    <DeleteOutlineOutlinedIcon   onClick={() => deleteProfileLink(index)} />
+                                </Button>
+                            </ListItem>
+                        ))}
+                    </List>
+                </WidgetWrapper>
+                <WidgetWrapper >
+                <Paper
+                    elevation={2}
+                    sx={{ "padding" : "1.5rem", 
+                    "backgroundColor": palette.background.default, 
+                    }}
+                > 
+                    <Formik
+                        onSubmit={ addProfileLink }
+                        initialValues={ initialValuesContact }
+                        validationSchema={ updateContactProfileLinksSchema }
+                    >
+                        {({
+                            values,
+                            errors,
+                            touched,
+                            handleBlur,
+                            handleChange,
+                            handleSubmit,
+                            setFieldValue,
+                            resetForm,
+                        }) => (
+                            <form onSubmit={handleSubmit}>
+                                <Box
+                                    display="grid"
+                                    gap="30px"
+                                    gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                                    minWidth={"450px"}
+                                >
+                                    <TextField
+                                        label="New Profile Link"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        value={values.profileLinks}
+                                        name="profileLinks"
+                                        error={Boolean(touched.profileLinks) && Boolean(errors.profileLinks)}
+                                        helperText={touched.profileLinks && errors.profileLinks}
+                                        sx={{ gridColumn: "span 4"}}
+                                    />    
+                                </Box>
 
-                                    {/* Button */}
-                                    <Box>
-                                        <Button
-                                            fullWidth
-                                            type="submit"
-                                            sx={{
-                                                m: "2rem 0",
-                                                p: "1rem",
-                                                backgroundColor: palette.primary.main,
-                                                color: palette.primary.dark,
-                                                "&:hover": { color: palette.primary.main },
-                                            }}
-                                        >
-                                            Add Profile Link
-                                        </Button>
-                                    </Box>
-                                </form>
-                                )}
-                            </Formik>
-                        </Paper>
-                    </WidgetWrapper>
-                </Box>
-                <Box
-                    width="100%"
-                    padding="2rem 6%"
-                    display="flex"
-                    gap="0.5rem"
-                    justifyContent="space-between"
-                >
+                                {/* Button */}
+                                <Box>
+                                    <Button
+                                        fullWidth
+                                        type="submit"
+                                        sx={{
+                                            m: "2rem 0",
+                                            p: "1rem",
+                                            backgroundColor: palette.primary.main,
+                                            color: palette.primary.dark,
+                                            "&:hover": { color: palette.primary.main },
+                                        }}
+                                    >
+                                        Add Profile Link
+                                    </Button>
+                                </Box>
+                            </form>
+                            )}
+                        </Formik>
+                    </Paper>
+                </WidgetWrapper>
+            </Box>
+            <Box
+                width="100%"
+                padding="2rem 6%"
+                display="flex"
+                gap="0.5rem"
+                justifyContent="space-between"
+            >
                 <WidgetWrapper>
-                    <Typography variant="h4">
+                    <Typography 
+                            fontWeight="bold" 
+                            variant="h4"
+                            color={secondary}
+                            sx={{
+                                "&:hover": {
+                                    color: primaryLight,
+                                },
+                                padding: "2rem",
+                            }}
+                    >
                         Notes : 
                     </Typography>
                     <List  aria-label="notes">
                         {notes.map((note, index)=>(
-                        <>
-                        <ListItem key={index}>
-                            <ListItemText primary={note}/>
-                            <Button>
-                                <DeleteIcon onClick={() => deleteNote(index)} />
-                            </Button>
-                        </ListItem>
-                        <Divider variant="middle" component="li" />
-                        </>
+                            <ListItem key={index} sx={{borderBottom : "1px solid #ccc"}}>
+                                <ListItemText primary={note}/>
+                                <Button>
+                                    <DeleteOutlineOutlinedIcon onClick={() => deleteNote(index)} />
+                                </Button>
+                            </ListItem>
                         ))}
                     </List>
                 </WidgetWrapper>
@@ -319,11 +353,10 @@ const ContactDetails = () => {
                         </Formik>
                     </Paper>
                 </WidgetWrapper>
-                </Box>
             </Box>
         </Box>
-        
+    </Box>
     )
-}
+};
 
 export default ContactDetails;

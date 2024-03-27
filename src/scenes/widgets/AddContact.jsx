@@ -6,11 +6,13 @@ import {
     Button,
     useTheme,
     Paper,
+    Typography
 } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector} from "react-redux";
 import { setJobPostContacts } from "state";
+import { useState } from "react";
 
 const contactSchema = yup.object().shape({
     firstName: yup.string().required("required"),
@@ -36,6 +38,7 @@ const AddContact = (jobPostId) => {
     const token = useSelector((state) => state.token);
     const dispatch = useDispatch();
     const { palette } = useTheme();
+    const [addError, setAddError] = useState(false);
 
     const addContact = async (values, onSubmitProps) => {
         const savedContact = await fetch(
@@ -47,12 +50,16 @@ const AddContact = (jobPostId) => {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(values),
-                
             }
         )
         const newContact = await savedContact.json();
-        dispatch(setJobPostContacts({jobPostContacts: newContact }));
-        onSubmitProps.resetForm();
+        if(!newContact.message){
+            setAddError(false);
+            dispatch(setJobPostContacts({jobPostContacts: newContact }));
+            onSubmitProps.resetForm();
+        }else{
+            setAddError(newContact.message);
+        }
     };
 
     return(
@@ -164,6 +171,11 @@ const AddContact = (jobPostId) => {
                         >
                             Add Contact
                         </Button>
+                    </Box>
+                    <Box>
+                        <Typography variant="p" color="error">
+                            {!addError ? "" : addError}
+                        </Typography>
                     </Box>
                 </form>
             )}

@@ -9,8 +9,6 @@ import { useSelector } from "react-redux";
 
 const ContactList = () => {
     const contacts = useSelector((state) => state.jobPostContacts);
-    
-
     return(
         <WidgetWrapper>
             <Box display="Flex" alignItems={"left"} gap="1.5rem" pl="3rem">

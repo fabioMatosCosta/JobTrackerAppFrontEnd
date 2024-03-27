@@ -5,8 +5,10 @@ import { Typography,
     Box,
     FormControlLabel,
     Fab,
+    Button
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useDispatch, useSelector } from "react-redux";
 import { setJobPost } from "state";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +40,23 @@ const JobPost = ({
 
     const handleEdit = () => {
         navigate(`/jobPostDetails/${jobPostId}`);
+    }
+
+    /* Delete */
+
+    const deletePost =  async () => {
+        const delPost = await fetch(
+            `http://localhost:3001/posts/${jobPostId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        const data = await delPost.json();
+        dispatch(setJobPost({ jobPost: data }));
     }
 
     return(
@@ -114,6 +133,14 @@ const JobPost = ({
                             Details
                         </Fab>
                     </FlexBetween>
+
+                    {/* Delete Button */}
+                    <FlexBetween>
+                        <Button>
+                            <DeleteOutlineOutlinedIcon onClick={() => deletePost()} />
+                        </Button>
+                    </FlexBetween>
+                    
                 </Box>
             </FlexBetween>
         </JobPostWrapper>
