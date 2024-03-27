@@ -204,6 +204,8 @@ const JobPostDetails = () => {
                                             onBlur={handleBlur}
                                             onChange={handleChange}
                                             value={values.newReply}
+                                            multiline
+                                            rows={4}
                                             name="newReply"
                                             error={Boolean(touched.newReply) && Boolean(errors.newReply)}
                                             helperText={touched.newReply && errors.newReply}
