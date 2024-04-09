@@ -64,7 +64,7 @@ const JobPost = ({
             <FlexBetween>
                 <Box 
                     display="grid"
-                    gridTemplateColumns="repeat(7, minmax(0, 2fr))"
+                    gridTemplateColumns="repeat(8, minmax(0, 2fr))"
                     width={"100%"}
                 >
                     <FlexBetween gap="3rem" >
