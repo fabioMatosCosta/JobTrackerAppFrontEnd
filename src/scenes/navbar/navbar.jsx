@@ -55,7 +55,7 @@ const Navbar = (page) => {;
 
         <FlexBetween gap="2rem">
             <FlexBetween>
-            {page.page === "contactDetails" || page.page === "jobPostDetails" ? (<IconButton onClick={() => navigate(-1)}><NavigateBeforeIcon></NavigateBeforeIcon></IconButton>) : null}
+            {page.page === "contactDetails" || page.page === "jobPostDetails" || page.page === "userContactList" ? (<IconButton onClick={() => navigate(-1)}><NavigateBeforeIcon></NavigateBeforeIcon></IconButton>) : null}
             </FlexBetween>
             <FlexBetween gap="1.5rem"> 
                 <Avatar src={user.picturePath}/>
@@ -81,7 +81,9 @@ const Navbar = (page) => {;
                     <MenuItem value={fullName}>
                         <Typography>{fullName}</Typography>
                     </MenuItem>
+                    <MenuItem onClick={()=> navigate("/contactList")}> Contact list </MenuItem>
                     <MenuItem onClick={()=> dispatch(setLogout())}> Log Out </MenuItem>
+                    
                 </Select>
                 </FormControl>
                 <IconButton onClick = { () => dispatch(setMode())}>

@@ -7,7 +7,7 @@ import { themeSettings } from "./theme";
 import HomePage from "scenes/homePage/homePage";
 import LoginPage from "scenes/loginPage/loginPage";
 import JobPostDetails from "scenes/jobPostDetails/jobPostDetails";
-import ContactList from "scenes/widgets/ContactList";
+import UserContactList from "scenes/userContactList/userContactList";
 import ContactDetails from  "scenes/contactDetails/ContactDetails";
 
 function App() {
@@ -32,6 +32,14 @@ function App() {
             />
             <Route 
               path="/jobPostDetails/:jobPostId/contacts/:contactId" 
+              element={isAuth ? <ContactDetails /> : <Navigate to="/"/>} 
+            />
+            <Route 
+              path="/contactList" 
+              element={isAuth ? <UserContactList /> : <Navigate to="/"/>} 
+            />
+            <Route 
+              path="/contactList/:contactId" 
               element={isAuth ? <ContactDetails /> : <Navigate to="/"/>} 
             />
           </Routes>

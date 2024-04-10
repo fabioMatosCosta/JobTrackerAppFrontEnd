@@ -61,7 +61,6 @@ const JobPost = ({
         }else{
             console.log(data.message)
         }
-        
     }
 
     return(
