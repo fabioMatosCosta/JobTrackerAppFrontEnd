@@ -43,9 +43,9 @@ const AddJobPost = () => {
     const { palette } = useTheme();
 
       /* Colors */
-      const theme = useTheme();
-      const primaryLight = theme.palette.primary.light;
-      const secondary = theme.palette.secondary.main;
+    const theme = useTheme();
+    const primaryLight = theme.palette.primary.light;
+    const secondary = theme.palette.secondary.main;
 
     /* Snackbar setup */
 

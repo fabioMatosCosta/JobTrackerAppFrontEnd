@@ -10,7 +10,7 @@ import { Typography,
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useDispatch, useSelector } from "react-redux";
-import { setJobPost } from "state";
+import { setJobPosts, setJobPost } from "state";
 import { useNavigate } from "react-router-dom";
 
 const JobPost = ({
@@ -56,7 +56,12 @@ const JobPost = ({
             }
         );
         const data = await delPost.json();
-        dispatch(setJobPost({ jobPost: data }));
+        if(!data.message){
+            dispatch(setJobPosts({jobPosts: data }));
+        }else{
+            console.log(data.message)
+        }
+        
     }
 
     return(
