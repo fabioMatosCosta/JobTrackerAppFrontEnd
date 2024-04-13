@@ -4,8 +4,9 @@ import{
     
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "scenes/navbar/navbar";
+import Contact from "scenes/widgets/Contact";
 
 
 
@@ -16,7 +17,7 @@ const UserContactList = () => {
     const token = useSelector((state) => state.token);
     const user = useSelector((state) => state.user);
 
-    const getContacts = async (values, onSubmitProps) => {
+    const getContacts = async (values) => {
         const contactList = await fetch(
             `http://localhost:3001/contacts/user/${user._id}`,
             {
@@ -29,8 +30,16 @@ const UserContactList = () => {
             }
         )
         await contactList.json();
+        console.log(contactList);
         setContacts(contactList);
     };
+
+    useEffect( () => {
+        getContacts();
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+    if(!contacts) return null;
+
 
     return (
         <Box>
@@ -59,15 +68,13 @@ const UserContactList = () => {
                         Email
                     </Typography>
             </Box>
-                    
                 {contacts.map(
                     ({
                         _id
                     }) => (
-                        <Contact 
-                            key={_id}
-                            contactId={_id}
-                        />
+                    <div>
+                        {_id}
+                    </div>
                     )
                 )}
 
