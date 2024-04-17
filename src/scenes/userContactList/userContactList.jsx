@@ -16,19 +16,13 @@ const UserContactList = () => {
 
     const token = useSelector((state) => state.token);
     const user = useSelector((state) => state.user);
+    const userId = user._id;
 
-    const getContacts = async (values) => {
-        const contactList = await fetch(
-            `http://localhost:3001/contacts/user/${user._id}`,
-            {
+    const getContacts = async () => {
+        const contactList = await fetch(`http://localhost:3001/contacts/user/${userId}`,{
                 method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(values),
-            }
-        )
+                headers: { Authorization: `Bearer ${token}`},
+            });
         await contactList.json();
         console.log(contactList);
         setContacts(contactList);
@@ -68,7 +62,7 @@ const UserContactList = () => {
                         Email
                     </Typography>
             </Box>
-                {contacts.map(
+               {/*  {contacts.map(
                     ({
                         _id
                     }) => (
@@ -76,7 +70,7 @@ const UserContactList = () => {
                         {_id}
                     </div>
                     )
-                )}
+                )} */}
 
                 </Box>
                 <Box width={"55%"}>
