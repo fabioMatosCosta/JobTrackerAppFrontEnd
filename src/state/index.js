@@ -6,6 +6,7 @@ const initialState = {
     token: null,
     jobPosts: [],
     jobPostContacts: [],
+    userContacts: [],
 };
 
 export const authSlice = createSlice({
@@ -25,6 +26,7 @@ export const authSlice = createSlice({
             state.token = null;
             state.jobPosts = [];
             state.jobPostContacts = [];
+            state.userContacts = [];
         },
         setJobPosts: (state, action) => {
             state.jobPosts = action.payload.jobPosts;
@@ -45,7 +47,17 @@ export const authSlice = createSlice({
                 return jobPostContact;
             });
             state.jobPostContacts = updatedJobPostContacts;
-        }
+        },
+        setUserContacts: (state, action) => {
+            state.userContacts = action.payload.userContacts;
+        },
+        setUserContact: (state, action) => {
+            const updatedUserContacts =  state.userContacts.map((userContact) => {
+                if(userContact._id === action.payload.userContact._id) return action.payload.userContact;
+                return userContact;
+            });
+            state.userContacts = updatedUserContacts;
+        },
     }
 })
 
@@ -56,6 +68,7 @@ export const {
     setJobPosts, 
     setJobPost, 
     setJobPostContacts, 
-    setJobPostContact } = authSlice.actions;
+    setJobPostContact,
+    setUserContacts } = authSlice.actions;
 
 export default authSlice.reducer;

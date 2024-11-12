@@ -3,29 +3,31 @@ import{
     Typography,
     
 } from "@mui/material";
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch} from "react-redux";
+import { useEffect } from "react";
 import Navbar from "scenes/navbar/navbar";
 import Contact from "scenes/widgets/Contact";
+import { setUserContacts } from "state";
 
 
 
 const UserContactList = () => {
 
-    const [contacts, setContacts] = useState(null);
-
     const token = useSelector((state) => state.token);
     const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const userId = user._id;
+
+    const contacts = useSelector((state) => state.userContacts);
 
     const getContacts = async () => {
         const contactList = await fetch(`http://localhost:3001/contacts/user/${userId}`,{
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}`},
             });
-        await contactList.json();
-        console.log(contactList);
-        setContacts(contactList);
+            const data =await contactList.json();
+        dispatch(setUserContacts({ userContacts: data }));
+        console.log(data)
     };
 
     useEffect( () => {
@@ -62,7 +64,7 @@ const UserContactList = () => {
                         Email
                     </Typography>
             </Box>
-               {/*  {contacts.map(
+                {contacts.map(
                     ({
                         _id
                     }) => (
@@ -70,7 +72,7 @@ const UserContactList = () => {
                         {_id}
                     </div>
                     )
-                )} */}
+                )} 
 
                 </Box>
                 <Box width={"55%"}>
