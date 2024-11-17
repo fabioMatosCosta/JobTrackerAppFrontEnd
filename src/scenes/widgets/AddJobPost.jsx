@@ -10,6 +10,7 @@ import {
     IconButton,
     Typography
 } from "@mui/material";
+
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
 import { Formik } from "formik";
@@ -190,6 +191,7 @@ const AddJobPost = () => {
                             helperText={touched.dateToApply && errors.dateToApply}
                             sx={{ gridColumn: "span 2"}}
                         />
+
                         {/* Type of job , not a text field, see later*/}     
                         <TextField
                             label="Type"

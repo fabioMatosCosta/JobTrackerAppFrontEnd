@@ -142,7 +142,7 @@ const ContactDetails = () => {
                         {contactInfo.email}
                     </Typography>
                     <Typography padding="0.75rem 6%" variant="h5">
-                        Phone Number :
+                        Phone Number:
                     </Typography>
                     <Typography pl="0.75rem">
                         {contactInfo.phoneNumber}
