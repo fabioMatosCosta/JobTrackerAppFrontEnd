@@ -9,9 +9,15 @@ import { Typography,
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from "react-redux";
 import { setJobPosts, setJobPost } from "state";
 import { useNavigate } from "react-router-dom";
+import * as React from 'react';
 
 const JobPost = ({
     jobPostId,
@@ -43,7 +49,19 @@ const JobPost = ({
     }
 
     /* Delete */
+    /* Setup*/
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    /* API call for delete */
     const deletePost =  async () => {
         const delPost = await fetch(
             `http://localhost:3001/posts/${jobPostId}`,
@@ -141,8 +159,29 @@ const JobPost = ({
                     {/* Delete Button */}
                     <FlexBetween>
                         <Button>
-                            <DeleteOutlineOutlinedIcon onClick={() => deletePost()} />
+                            <DeleteOutlineOutlinedIcon onClick={() => handleClickOpen()} />
                         </Button>
+                        <Dialog
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                            {"Delete confirmation"}
+                            </DialogTitle>
+                            <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Are you sure you want to delete this job post?
+                            </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                            <Button onClick={handleClose}>No</Button>
+                            <Button onClick={() => {deletePost(); handleClose()}} autoFocus>
+                                Yes 
+                            </Button>
+                            </DialogActions>
+                        </Dialog>
                     </FlexBetween>
                     
                 </Box>
